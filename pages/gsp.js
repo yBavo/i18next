@@ -1,9 +1,17 @@
-import { useRouter } from "next/router";
 import { langs } from "../constant";
 
-export default function Home() {
-  const { locale } = useRouter();
-  const { title, desc } = langs[locale].home;
+export async function getStaticProps({ locale }) {
+  const t = langs[locale].gsp;
+
+  return {
+    props: {
+      t,
+    },
+  };
+}
+
+const gsp = ({ t }) => {
+  const { title, desc } = t;
 
   return (
     <section className="max-w-xl mx-auto">
@@ -11,4 +19,6 @@ export default function Home() {
       <div className="text-2xl mt-20">{desc}</div>
     </section>
   );
-}
+};
+
+export default gsp;
